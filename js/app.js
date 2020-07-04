@@ -86,7 +86,7 @@ pageHeader.addEventListener('click',function(event){
     const sectionClickedLink=event.target; //returns the anchor 
     const sectionClickedIndex=sectionClickedLink.id; //section index (1,2,etc)
     const actualSection=document.getElementById('section'+sectionClickedIndex);
-    const diff=actualSection.offsetTop - navContainer.offsetHeight;
+    const diff=actualSection.offsetTop - navContainer.offsetHeight+100;
     //the navbar height was deducted from the offset to make the section visible from it's start , so that the navbar doesn't cover 
     //its beginning
     scrollTo({
@@ -97,4 +97,22 @@ pageHeader.addEventListener('click',function(event){
     const previousSection=document.querySelector('.your-active-class');
     previousSection.classList.toggle("your-active-class");
     actualSection.classList.toggle("your-active-class");
+});
+//show on scrolling the section i am currently in
+window.addEventListener('scroll',function(){
+const currentHeight=window.scrollY;
+//height of a section
+const sectionHeight=document.querySelector('section').offsetHeight;
+//distance from section 1 to the top
+const distanceFromFirstSec=document.getElementById('section1').offsetTop;
+const allSections=currentHeight-distanceFromFirstSec;
+if(allSections>=0){
+const sectionNumber=Math.floor(allSections/sectionHeight);
+const previousSection=document.querySelector('.your-active-class');
+if(previousSection.id!=('section'+(sectionNumber+1))){
+previousSection.classList.toggle("your-active-class");
+const currentSection=document.getElementById('section'+(sectionNumber+1));
+currentSection.classList.toggle("your-active-class");
+}
+}
 });
